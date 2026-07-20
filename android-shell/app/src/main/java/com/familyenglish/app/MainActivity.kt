@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                     val url = request.url
-                    if (url.scheme == "https" && url.host == Uri.parse(BuildConfig.SERVICE_URL).host) return false
+                    val serviceUrl = Uri.parse(BuildConfig.SERVICE_URL)
+                    if (url.scheme == serviceUrl.scheme && url.host == serviceUrl.host && url.port == serviceUrl.port) return false
                     startActivity(Intent(Intent.ACTION_VIEW, url)); return true
                 }
             }
