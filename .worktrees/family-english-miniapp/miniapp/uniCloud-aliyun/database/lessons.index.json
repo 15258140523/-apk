@@ -1,5 +1,0 @@
-[
-  { "IndexName": "family_updated", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "family_id", "Direction": "1" }, { "Name": "updated_at", "Direction": "-1" }], "MgoIsUnique": false } },
-  { "IndexName": "occurrence_key", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "occurrence_key", "Direction": "1" }], "MgoIsUnique": true } },
-  { "IndexName": "family_actual", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "family_id", "Direction": "1" }, { "Name": "actual_at", "Direction": "1" }], "MgoIsUnique": false } }
-]

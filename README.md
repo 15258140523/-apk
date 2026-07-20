@@ -4,9 +4,23 @@
 
 ## 本地运行
 
+一键构建并启动：
+
 ```bash
-npm install --prefix web
-npm run build --prefix web
+./scripts/build-and-run.sh
+```
+
+默认访问地址为 `http://127.0.0.1:8080`。可指定端口或数据目录：
+
+```bash
+APP_ADDR=:8090 APP_DATA_DIR=/path/to/data ./scripts/build-and-run.sh
+```
+
+手动执行各步骤：
+
+```bash
+pnpm install --prefix web
+pnpm run build --prefix web
 go mod download
 go run ./cmd/server -addr :8080 -data ./data
 ```
@@ -16,7 +30,7 @@ Open `http://127.0.0.1:8080`. The first visitor creates the family and first cou
 ## Build one deployable binary
 
 ```bash
-npm ci --prefix web && npm run build --prefix web
+pnpm ci --prefix web && pnpm run build --prefix web
 go build -trimpath -ldflags="-s -w" -o family-english ./cmd/server
 ./family-english -addr :8080 -data /var/lib/family-english
 ```

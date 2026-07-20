@@ -1,4 +1,6 @@
 data/
+bin/
+.cache/
 web/node_modules/
 web/dist/
 cmd/server/web/dist/
