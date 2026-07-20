@@ -1,0 +1,17 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "course_id", "occurrence_key", "planned_at", "actual_at", "status", "version"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "course_id": { "bsonType": "string" },
+    "occurrence_key": { "bsonType": "string" },
+    "planned_at": { "bsonType": "timestamp" },
+    "actual_at": { "bsonType": "timestamp" },
+    "status": { "bsonType": "string" },
+    "version": { "bsonType": "int", "minimum": 1 }
+  }
+}

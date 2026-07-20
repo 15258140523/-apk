@@ -1,0 +1,16 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "token_hash", "role", "expires_at", "used_at", "used_by"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "token_hash": { "bsonType": "string" },
+    "role": { "bsonType": "string", "enum": ["viewer"] },
+    "expires_at": { "bsonType": "timestamp" },
+    "used_at": { "bsonType": ["timestamp", "null"] },
+    "used_by": { "bsonType": ["string", "null"] }
+  }
+}

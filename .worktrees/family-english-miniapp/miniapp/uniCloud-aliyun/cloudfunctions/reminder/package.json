@@ -1,0 +1,11 @@
+{
+  "name": "reminder",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "app-shared": "file:../common/app-shared",
+    "uni-id-common": "file:../common/uni-id-common"
+  }
+}

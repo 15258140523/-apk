@@ -1,0 +1,14 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "course_id", "member_id", "enabled"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "course_id": { "bsonType": "string" },
+    "member_id": { "bsonType": "string" },
+    "enabled": { "bsonType": "bool" }
+  }
+}

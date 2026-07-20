@@ -1,0 +1,17 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "course_id", "weekday", "hour", "minute", "effective_from", "effective_to"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "course_id": { "bsonType": "string" },
+    "weekday": { "bsonType": "int", "minimum": 0, "maximum": 6 },
+    "hour": { "bsonType": "int", "minimum": 0, "maximum": 23 },
+    "minute": { "bsonType": "int", "minimum": 0, "maximum": 59 },
+    "effective_from": { "bsonType": "timestamp" },
+    "effective_to": { "bsonType": ["timestamp", "null"] }
+  }
+}

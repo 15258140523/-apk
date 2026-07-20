@@ -1,0 +1,17 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "lesson_id", "member_id", "remind_at", "unique_key", "status", "error_code"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "lesson_id": { "bsonType": "string" },
+    "member_id": { "bsonType": "string" },
+    "remind_at": { "bsonType": "timestamp" },
+    "unique_key": { "bsonType": "string" },
+    "status": { "bsonType": "string" },
+    "error_code": { "bsonType": ["string", "null"] }
+  }
+}

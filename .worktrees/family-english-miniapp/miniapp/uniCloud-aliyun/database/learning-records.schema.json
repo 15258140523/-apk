@@ -1,0 +1,18 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "course_id", "lesson_id", "title", "note", "tags", "cloud_links", "deleted_at"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "course_id": { "bsonType": "string" },
+    "lesson_id": { "bsonType": "string" },
+    "title": { "bsonType": "string" },
+    "note": { "bsonType": "string" },
+    "tags": { "bsonType": "array" },
+    "cloud_links": { "bsonType": "array" },
+    "deleted_at": { "bsonType": ["timestamp", "null"] }
+  }
+}

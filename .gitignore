@@ -1,2 +1,9 @@
-.superpowers/
-.worktrees/
+data/
+web/node_modules/
+web/dist/
+cmd/server/web/dist/
+android-shell/.gradle/
+android-shell/build/
+android-shell/app/build/
+*.apk
+.DS_Store

@@ -1,0 +1,98 @@
+<style>
+  .flow { display:grid; grid-template-columns:repeat(3,minmax(230px,1fr)); gap:22px; align-items:start; margin:22px 0; }
+  .step { position:relative; }
+  .step::after { content:"→"; position:absolute; right:-17px; top:280px; color:#738195; font-size:26px; font-weight:700; }
+  .step:last-child::after { display:none; }
+  .step-label { text-align:center; font-weight:700; margin-bottom:9px; }
+  .phone { max-width:300px; margin:0 auto; background:#f4f7fa; border:1px solid #d8e0e8; border-radius:28px; padding:12px; color:#1c2736; box-shadow:0 10px 28px rgba(28,39,54,.09); }
+  .screen { min-height:550px; background:#fff; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; }
+  .bar { padding:18px 16px 12px; display:flex; gap:12px; align-items:center; font-weight:700; }
+  .cover { margin:0 14px 14px; padding:18px; border-radius:16px; background:linear-gradient(135deg,#dff5e8,#edf5ff); }
+  .course-name { font-size:20px; font-weight:800; }
+  .muted { color:#718092; font-size:12px; }
+  .metrics { display:grid; grid-template-columns:1fr 1fr; margin-top:16px; gap:8px; }
+  .metric { background:rgba(255,255,255,.65); padding:10px; border-radius:11px; }
+  .metric strong { display:block; font-size:18px; }
+  .block { padding:0 16px 14px; }
+  .block-title { font-size:13px; font-weight:700; margin-bottom:9px; }
+  .line { padding:11px 0; border-bottom:1px solid #edf0f3; display:flex; justify-content:space-between; font-size:13px; }
+  .bottom-action { margin-top:auto; padding:12px 14px 16px; border-top:1px solid #edf0f3; }
+  .primary { display:block; width:100%; box-sizing:border-box; text-align:center; padding:12px; border-radius:12px; background:#327a5b; color:#fff; font-weight:700; }
+  .secondary { display:block; width:100%; box-sizing:border-box; text-align:center; padding:11px; border-radius:12px; color:#327a5b; border:1px solid #9fc9b5; margin-top:9px; font-weight:700; }
+  .dim { background:rgba(24,34,46,.28); flex:1; display:flex; align-items:flex-end; }
+  .sheet { background:#fff; width:100%; border-radius:20px 20px 0 0; padding:18px 16px 20px; box-sizing:border-box; }
+  .sheet-title { font-size:18px; font-weight:800; }
+  .change { margin:16px 0; padding:14px; background:#f4f8f6; border-radius:13px; display:flex; justify-content:center; align-items:center; gap:14px; }
+  .change strong { font-size:24px; }
+  .field { margin:0 14px 12px; padding:13px; border:1px solid #e0e6ec; border-radius:13px; color:#758294; font-size:13px; }
+  .upload-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 14px 14px; }
+  .upload { min-height:70px; display:grid; place-items:center; text-align:center; background:#f4f8f6; border:1px dashed #abc7b9; border-radius:12px; color:#327a5b; font-size:12px; }
+  .result { margin:0 14px 14px; padding:12px; border-radius:12px; background:#edf8f2; font-size:13px; color:#286649; }
+  .decision { display:grid; grid-template-columns:repeat(2,minmax(240px,1fr)); gap:14px; max-width:760px; margin:18px auto 0; }
+  @media (max-width:850px) {
+    .flow { grid-template-columns:1fr; }
+    .step::after { content:"↓"; position:static; display:block; text-align:center; margin:10px 0 -5px; }
+    .step:last-child::after { display:none; }
+    .decision { grid-template-columns:1fr; }
+  }
+</style>
+
+<h2>一次上课完成后的操作流程</h2>
+<p class="subtitle">默认先明确显示“8 → 7”，再让管理员选择是否顺手记录学习内容。</p>
+
+<div class="flow">
+  <div class="step">
+    <div class="step-label">1 · 课程详情</div>
+    <div class="phone"><div class="screen">
+      <div class="bar"><span>‹</span><span>课程详情</span></div>
+      <div class="cover">
+        <div class="muted">英语课程</div>
+        <div class="course-name">外教口语</div>
+        <div class="metrics"><div class="metric"><span class="muted">剩余课时</span><strong>8 次</strong></div><div class="metric"><span class="muted">下次上课</span><strong style="font-size:15px">周六 10:00</strong></div></div>
+      </div>
+      <div class="block"><div class="block-title">本次课程</div><div class="line"><span>时间</span><strong>7月18日 10:00</strong></div><div class="line"><span>提醒成员</span><strong>爸爸、妈妈</strong></div><div class="line"><span>状态</span><strong style="color:#b67825">待上课</strong></div></div>
+      <div class="block"><div class="block-title">最近记录</div><div class="line"><span>7月11日 · 描述天气</span><span>视频 1</span></div><div class="line"><span>7月4日 · 自我介绍</span><span>PDF 1</span></div></div>
+      <div class="bottom-action"><div class="primary">✓ 本次已上课</div></div>
+    </div></div>
+  </div>
+
+  <div class="step">
+    <div class="step-label">2 · 防误扣确认</div>
+    <div class="phone"><div class="screen" style="background:#eef1f4">
+      <div class="bar" style="opacity:.55"><span>‹</span><span>课程详情</span></div>
+      <div class="dim">
+        <div class="sheet">
+          <div class="sheet-title">确认完成本次课程？</div>
+          <div class="muted" style="margin-top:5px">7月18日 10:00 · 外教口语</div>
+          <div class="change"><div><span class="muted">当前</span><strong>8</strong></div><span style="font-size:22px">→</span><div><span class="muted">完成后</span><strong style="color:#327a5b">7</strong></div></div>
+          <div class="primary">完成并添加学习记录</div>
+          <div class="secondary">仅扣除课时</div>
+          <div style="text-align:center;margin-top:12px;font-size:12px;color:#758294">取消</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="step">
+    <div class="step-label">3 · 可跳过的学习记录</div>
+    <div class="phone"><div class="screen">
+      <div class="bar"><span>‹</span><span>记录这节课</span><span style="margin-left:auto;color:#327a5b;font-size:12px">稍后再写</span></div>
+      <div class="result">✓ 已扣除1课时，目前剩余7次</div>
+      <div class="field">本节主题，例如：描述喜欢的动物</div>
+      <div class="field" style="min-height:90px">记录新单词、句型、老师反馈或孩子的表现……</div>
+      <div class="block-title" style="padding:0 14px">添加资料</div>
+      <div class="upload-grid"><div class="upload">＋<br>短视频</div><div class="upload">＋<br>图片</div><div class="upload">＋<br>PDF课件</div></div>
+      <div class="field">🔗 完整课堂视频的网盘链接（可选）</div>
+      <div class="bottom-action"><div class="primary">保存学习记录</div></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="decision">
+  <div class="option" data-choice="approve-hybrid-flow" onclick="toggleSelect(this)">
+    <div class="letter">A</div><div class="content"><h3>采用这个流程（推荐）</h3><p>既能快速扣课，也能顺手沉淀学习内容。</p></div>
+  </div>
+  <div class="option" data-choice="quick-only" onclick="toggleSelect(this)">
+    <div class="letter">B</div><div class="content"><h3>扣课后直接结束</h3><p>学习记录由管理员之后从成长页面单独添加。</p></div>
+  </div>
+</div>

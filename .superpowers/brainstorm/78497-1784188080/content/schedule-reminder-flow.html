@@ -1,0 +1,90 @@
+<style>
+  .layout { display:grid; grid-template-columns:minmax(300px,1.15fr) minmax(300px,.85fr); gap:28px; margin-top:22px; align-items:start; }
+  .phone { max-width:350px; margin:0 auto; background:#f4f7fa; border:1px solid #d8e0e8; border-radius:28px; padding:12px; color:#1c2736; box-shadow:0 10px 28px rgba(28,39,54,.09); }
+  .screen { min-height:600px; background:#fff; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; }
+  .bar { padding:18px 16px 12px; display:flex; align-items:center; gap:12px; font-weight:700; }
+  .bar .action { margin-left:auto; color:#327a5b; font-size:13px; }
+  .month { padding:0 16px 12px; display:flex; justify-content:space-between; align-items:center; }
+  .month strong { font-size:20px; }
+  .week { margin:0 12px 14px; display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; }
+  .day { padding:7px 2px; border-radius:12px; font-size:11px; color:#6e7b8b; }
+  .day span { display:block; margin-top:5px; font-size:14px; color:#1c2736; }
+  .day.active { background:#327a5b; color:#fff; }
+  .day.active span { color:#fff; }
+  .date-title { padding:0 16px 10px; font-weight:700; }
+  .event { margin:0 14px 10px; display:grid; grid-template-columns:56px 1fr; gap:10px; }
+  .time { font-size:12px; color:#758294; padding-top:12px; }
+  .event-card { border-left:4px solid #327a5b; background:#edf8f2; border-radius:0 13px 13px 0; padding:11px 12px; }
+  .event-card.blue { border-color:#587da8; background:#eef4fb; }
+  .event-title { font-weight:700; font-size:14px; }
+  .event-sub { color:#718092; font-size:12px; margin-top:4px; }
+  .tag { display:inline-block; margin-top:8px; padding:3px 7px; border-radius:99px; background:rgba(50,122,91,.11); color:#327a5b; font-size:10px; }
+  .tip { margin:10px 14px 14px; padding:11px; border-radius:12px; background:#fff8e8; color:#865c18; font-size:12px; }
+  .tabs { margin-top:auto; border-top:1px solid #e7ebf0; display:grid; grid-template-columns:repeat(4,1fr); padding:10px 4px 12px; font-size:11px; color:#778495; text-align:center; }
+  .tabs .active { color:#327a5b; font-weight:700; }
+  .panel { max-width:390px; margin:0 auto; }
+  .panel-title { font-weight:800; font-size:18px; margin-bottom:14px; }
+  .field { border-bottom:1px solid #e7ebf0; padding:12px 0; display:flex; align-items:center; gap:12px; }
+  .field-label { width:82px; flex:0 0 auto; color:#6e7b8b; font-size:13px; }
+  .field-value { flex:1; font-weight:600; font-size:13px; }
+  .choice-row { display:flex; gap:8px; }
+  .pill { border:1px solid #d8e0e8; border-radius:10px; padding:7px 10px; font-size:12px; }
+  .pill.selected { background:#edf8f2; border-color:#9dc9b4; color:#327a5b; font-weight:700; }
+  .member { display:flex; align-items:center; gap:10px; padding:10px 0; }
+  .avatar { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:#eef4fb; }
+  .member-main { flex:1; }
+  .member-name { font-weight:700; font-size:13px; }
+  .member-sub { color:#758294; font-size:11px; margin-top:2px; }
+  .switch { width:38px; height:22px; border-radius:20px; background:#327a5b; position:relative; }
+  .switch::after { content:""; position:absolute; width:18px; height:18px; top:2px; right:2px; border-radius:50%; background:white; }
+  .switch.off { background:#cbd3db; }
+  .switch.off::after { right:18px; }
+  .notice { margin:14px 0; padding:11px 12px; border-radius:12px; background:#eef4fb; color:#476582; font-size:12px; }
+  .primary { display:block; width:100%; box-sizing:border-box; text-align:center; padding:12px; border-radius:12px; background:#327a5b; color:#fff; font-weight:700; margin-top:14px; }
+  .decision { display:grid; grid-template-columns:repeat(2,minmax(240px,1fr)); gap:14px; max-width:760px; margin:24px auto 0; }
+  @media (max-width:800px) { .layout { grid-template-columns:1fr; } .decision { grid-template-columns:1fr; } }
+</style>
+
+<h2>固定课表与单次调整</h2>
+<p class="subtitle">固定规则负责长期生成课程；临时改期只覆盖当天这一节，并通知该课程选中的成员。</p>
+
+<div class="layout">
+  <div>
+    <div class="phone"><div class="screen">
+      <div class="bar"><span>课程日历</span><span class="action">＋ 添加课程</span></div>
+      <div class="month"><strong>2026年7月</strong><span style="color:#327a5b;font-size:13px">今天</span></div>
+      <div class="week">
+        <div class="day">一<span>13</span></div><div class="day">二<span>14</span></div><div class="day">三<span>15</span></div><div class="day active">四<span>16</span></div><div class="day">五<span>17</span></div><div class="day">六<span>18</span></div><div class="day">日<span>19</span></div>
+      </div>
+      <div class="date-title">本周课程</div>
+      <div class="event"><div class="time">周三<br>19:00</div><div class="event-card blue"><div class="event-title">自然拼读</div><div class="event-sub">固定：每周三 · 剩余12次</div><span class="tag">已完成</span></div></div>
+      <div class="event"><div class="time">周六<br>10:00</div><div class="event-card"><div class="event-title">外教口语</div><div class="event-sub">固定：每周六 · 剩余8次</div><span class="tag">待上课</span></div></div>
+      <div class="event"><div class="time">周日<br>16:30</div><div class="event-card blue"><div class="event-title">绘本精读</div><div class="event-sub"><s>原定15:30</s> · 本次已改期</div><span class="tag">仅修改7月19日</span></div></div>
+      <div class="tip">临时修改不会改变下周日15:30的固定课程。</div>
+      <div class="tabs"><div>⌂<br>首页</div><div class="active">▦<br>日历</div><div>♡<br>成长</div><div>☻<br>家庭</div></div>
+    </div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">调整7月19日这一次</div>
+    <div class="field"><div class="field-label">操作</div><div class="field-value"><div class="choice-row"><div class="pill selected">改期</div><div class="pill">请假</div><div class="pill">取消</div></div></div></div>
+    <div class="field"><div class="field-label">新时间</div><div class="field-value">7月19日 周日 16:30</div><span>›</span></div>
+    <div class="field"><div class="field-label">影响范围</div><div class="field-value">仅本次课程</div></div>
+    <div class="field"><div class="field-label">提醒时间</div><div class="field-value">提前1天、提前1小时</div><span>›</span></div>
+    <div style="margin-top:18px;font-weight:700">本课程提醒成员</div>
+    <div class="member"><div class="avatar">妈</div><div class="member-main"><div class="member-name">妈妈 · 管理员</div><div class="member-sub">接收改期和上课提醒</div></div><div class="switch"></div></div>
+    <div class="member"><div class="avatar">爸</div><div class="member-main"><div class="member-name">爸爸 · 管理员</div><div class="member-sub">接收改期和上课提醒</div></div><div class="switch"></div></div>
+    <div class="member"><div class="avatar">奶</div><div class="member-main"><div class="member-name">奶奶 · 查看成员</div><div class="member-sub">不接收本课程提醒</div></div><div class="switch off"></div></div>
+    <div class="notice">保存后，妈妈和爸爸会收到“课程已改至周日16:30”的通知；后续提醒也按新时间发送。</div>
+    <div class="primary">保存单次调整</div>
+  </div>
+</div>
+
+<div class="decision">
+  <div class="option" data-choice="approve-schedule" onclick="toggleSelect(this)">
+    <div class="letter">A</div><div class="content"><h3>采用这个设计（推荐）</h3><p>固定规则与单次调整分开，提醒成员沿用课程设置。</p></div>
+  </div>
+  <div class="option" data-choice="simpler-schedule" onclick="toggleSelect(this)">
+    <div class="letter">B</div><div class="content"><h3>再简化</h3><p>取消周视图，只保留按日期排列的课程列表。</p></div>
+  </div>
+</div>

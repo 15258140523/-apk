@@ -1,0 +1,3 @@
+[
+  { "IndexName": "family_updated", "MgoKeySchema": { "MgoIndexKeys": [{ "Name": "family_id", "Direction": "1" }, { "Name": "updated_at", "Direction": "-1" }], "MgoIsUnique": false } }
+]

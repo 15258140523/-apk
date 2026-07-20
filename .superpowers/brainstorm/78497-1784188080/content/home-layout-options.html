@@ -1,0 +1,72 @@
+<style>
+  .phone-grid { display:grid; grid-template-columns:repeat(2,minmax(280px,1fr)); gap:24px; margin-top:22px; }
+  .phone-choice { cursor:pointer; }
+  .phone { max-width:340px; margin:0 auto; background:#f7f9fc; border:1px solid #d9e0ea; border-radius:28px; padding:14px; color:#1c2736; box-shadow:0 12px 32px rgba(28,39,54,.10); }
+  .screen { min-height:580px; background:#fff; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; }
+  .top { padding:20px 18px 12px; display:flex; justify-content:space-between; align-items:center; }
+  .hello { font-size:18px; font-weight:700; }
+  .avatar { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#e9f6ef; }
+  .hero { margin:4px 16px 14px; padding:18px; border-radius:18px; background:linear-gradient(135deg,#dff5e8,#eef8ff); }
+  .hero-label { font-size:12px; color:#607080; }
+  .count { font-size:36px; font-weight:800; margin:4px 0 12px; }
+  .next { padding-top:12px; border-top:1px solid rgba(28,39,54,.12); font-size:14px; }
+  .primary { margin-top:14px; display:block; text-align:center; padding:11px 12px; border-radius:12px; color:#fff; background:#327a5b; font-weight:700; }
+  .section-title { padding:0 18px 10px; font-weight:700; display:flex; justify-content:space-between; }
+  .row { margin:0 16px 10px; padding:13px 14px; border:1px solid #e7ebf0; border-radius:14px; display:flex; gap:12px; align-items:center; }
+  .icon { width:38px; height:38px; display:grid; place-items:center; border-radius:12px; background:#eef7f2; flex:0 0 auto; }
+  .row-main { flex:1; }
+  .row-title { font-weight:700; font-size:14px; }
+  .row-sub { color:#768394; font-size:12px; margin-top:3px; }
+  .chip { color:#327a5b; background:#e9f6ef; border-radius:999px; padding:4px 8px; font-size:11px; }
+  .moment { margin:0 16px 12px; display:grid; grid-template-columns:74px 1fr; gap:12px; }
+  .thumb { min-height:70px; border-radius:12px; background:linear-gradient(135deg,#f5dca8,#e7b8a2); display:grid; place-items:center; font-size:24px; }
+  .moment-body { padding:4px 0; }
+  .tabs { margin-top:auto; border-top:1px solid #e7ebf0; display:grid; grid-template-columns:repeat(4,1fr); padding:10px 4px 12px; font-size:11px; color:#778495; text-align:center; }
+  .tabs .active { color:#327a5b; font-weight:700; }
+  .choice-caption { text-align:center; margin:14px 0 0; }
+  .choice-caption strong { display:block; font-size:17px; }
+  .choice-caption span { display:block; color:#6f7b8a; margin-top:4px; font-size:13px; }
+  @media (max-width:760px) { .phone-grid { grid-template-columns:1fr; } }
+</style>
+
+<h2>首页应该把什么放在最显眼的位置？</h2>
+<p class="subtitle">两种方案功能相同，只是使用重心不同。点击你更喜欢的一种。</p>
+
+<div class="phone-grid">
+  <div class="phone-choice option" data-choice="course-first" onclick="toggleSelect(this)">
+    <div class="phone">
+      <div class="screen">
+        <div class="top"><div class="hello">早上好，桐桐妈妈</div><div class="avatar">👧</div></div>
+        <div class="hero">
+          <div class="hero-label">外教口语 · 剩余课时</div>
+          <div class="count">8 <small style="font-size:14px;font-weight:500">次</small></div>
+          <div class="next"><strong>下次：周六 10:00</strong><br><span style="color:#607080;font-size:12px">爸爸、妈妈将在课前收到提醒</span></div>
+          <div class="primary">✓ 本次已上课</div>
+        </div>
+        <div class="section-title"><span>其他课程</span><span style="color:#327a5b;font-size:12px">全部 3 门</span></div>
+        <div class="row"><div class="icon">📖</div><div class="row-main"><div class="row-title">自然拼读</div><div class="row-sub">周三 19:00 · 剩余 12 次</div></div><div class="chip">明天</div></div>
+        <div class="row"><div class="icon">🎧</div><div class="row-main"><div class="row-title">绘本精读</div><div class="row-sub">周日 15:30 · 剩余 5 次</div></div></div>
+        <div class="section-title" style="margin-top:6px"><span>最近学习</span><span style="color:#327a5b;font-size:12px">查看全部</span></div>
+        <div class="moment"><div class="thumb">🎬</div><div class="moment-body"><div class="row-title">学会描述天气</div><div class="row-sub">外教口语 · 昨天<br>视频、课件和妈妈的笔记</div></div></div>
+        <div class="tabs"><div class="active">⌂<br>首页</div><div>▦<br>日历</div><div>♡<br>成长</div><div>☻<br>家庭</div></div>
+      </div>
+    </div>
+    <div class="choice-caption"><strong>A · 课程优先（推荐）</strong><span>先看剩余课时与下次上课，一步完成扣课</span></div>
+  </div>
+
+  <div class="phone-choice option" data-choice="journal-first" onclick="toggleSelect(this)">
+    <div class="phone">
+      <div class="screen">
+        <div class="top"><div class="hello">桐桐的英语成长</div><div class="avatar">👧</div></div>
+        <div class="section-title"><span>最近的学习时刻</span><span style="color:#327a5b;font-size:12px">+ 记录</span></div>
+        <div class="moment" style="grid-template-columns:120px 1fr"><div class="thumb" style="min-height:110px">🎬</div><div class="moment-body"><div class="row-title">学会描述天气</div><div class="row-sub">昨天 · 外教口语</div><p style="font-size:12px;margin:10px 0 0">Sunny, cloudy, windy… 今天可以完整说出天气啦。</p></div></div>
+        <div class="moment" style="grid-template-columns:120px 1fr"><div class="thumb" style="min-height:110px;background:linear-gradient(135deg,#c9ddf4,#dccdf2)">📚</div><div class="moment-body"><div class="row-title">绘本：The Very Hungry Caterpillar</div><div class="row-sub">周日 · 绘本精读</div><p style="font-size:12px;margin:10px 0 0">上传了课堂PDF和跟读录音。</p></div></div>
+        <div class="section-title" style="margin-top:6px"><span>本周课程</span><span style="color:#327a5b;font-size:12px">查看日历</span></div>
+        <div class="row"><div class="icon">📖</div><div class="row-main"><div class="row-title">自然拼读</div><div class="row-sub">明天 19:00 · 剩余 12 次</div></div><div class="chip">待上课</div></div>
+        <div class="row"><div class="icon">🗣️</div><div class="row-main"><div class="row-title">外教口语</div><div class="row-sub">周六 10:00 · 剩余 8 次</div></div></div>
+        <div class="tabs"><div class="active">⌂<br>成长</div><div>▦<br>日历</div><div>◉<br>课程</div><div>☻<br>家庭</div></div>
+      </div>
+    </div>
+    <div class="choice-caption"><strong>B · 成长记录优先</strong><span>先浏览照片、视频与学习内容，课程管理放在后面</span></div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "child_name", "owner_user_id", "status", "delete_after", "renewal_due_at"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "child_name": { "bsonType": "string" },
+    "owner_user_id": { "bsonType": "string" },
+    "status": { "bsonType": "string" },
+    "delete_after": { "bsonType": ["timestamp", "null"] },
+    "renewal_due_at": { "bsonType": ["timestamp", "null"] }
+  }
+}

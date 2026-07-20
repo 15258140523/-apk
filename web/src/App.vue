@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { api, setFamilyId, type Course, type Family, type Lesson, type RecordItem } from './api'
+
+const family = ref<Family | null>(null), courses = ref<Course[]>([]), lessons = ref<Lesson[]>([]), records = ref<RecordItem[]>([])
+const view = ref<'home'|'calendar'|'growth'|'family'>('home'), loading = ref(true), error = ref(''), notice = ref(''), showCourse = ref(false), showRecord = ref(false)
+const courseForm = ref({ name:'', totalLessons:8, weekday:6, timeOfDay:'10:00', color:'#16803c' })
+const recordForm = ref({ courseId:'', lessonId:'', topic:'', notes:'', tags:'', link:'' })
+const setup = ref({ childName:'', displayName:'' })
+const canWrite = computed(() => family.value?.role === 'owner' || family.value?.role === 'admin')
+const upcoming = computed(() => lessons.value.filter(l => l.status === 'pending').slice(0, 4))
+const week = ['日','一','二','三','四','五','六']
+function date(value:string) { return new Intl.DateTimeFormat('zh-CN',{month:'numeric',day:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(value)) }
+function flash(msg:string) { notice.value = msg; window.setTimeout(()=>notice.value='',3200) }
+async function reload() { if (!family.value) return; try { [courses.value, lessons.value, records.value] = await Promise.all([api.courses(),api.lessons(),api.records()]) } catch(e) { error.value = (e as Error).message } }
+async function init() { loading.value=true; try { const boot=await api.bootstrap(); family.value=boot.family; if (boot.family) { setFamilyId(boot.family.id); await reload() } } catch(e) { error.value=(e as Error).message } finally { loading.value=false } }
+async function createFamily() { try { const f=await api.createFamily(setup.value.childName,setup.value.displayName); setFamilyId(f.id); family.value=f; flash('家庭已创建，现在添加第一门课程'); showCourse.value=true } catch(e) { error.value=(e as Error).message } }
+async function addCourse() { try { await api.createCourse(courseForm.value); showCourse.value=false; courseForm.value.name=''; await reload(); flash('课程和未来课表已创建') } catch(e) { error.value=(e as Error).message } }
+async function complete(lesson:Lesson) { if (!confirm(`确认完成「${lesson.courseName}」吗？剩余课时将从 ${lesson.remainingLessons} 变为 ${lesson.remainingLessons-1}。`)) return; try { const result=await api.complete(lesson.id); await reload(); flash(`已扣除课时：${result.remainingBefore} -> ${result.remainingAfter}`) } catch(e) { error.value=(e as Error).message } }
+async function undo(lesson:Lesson) { try { await api.undo(lesson.id); await reload(); flash('已撤销扣课并恢复余额') } catch(e) { error.value=(e as Error).message } }
+async function saveRecord() { try { await api.createRecord(recordForm.value); showRecord.value=false; recordForm.value={courseId:'',lessonId:'',topic:'',notes:'',tags:'',link:''}; await reload(); view.value='growth'; flash('学习记录已保存') } catch(e) { error.value=(e as Error).message } }
+async function exportData() { try { const response=await api.export(); if(!response.ok) throw new Error('导出失败'); const blob=await response.blob(),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='family-export.json';a.click();URL.revokeObjectURL(url) } catch(e) { error.value=(e as Error).message } }
+onMounted(init)
+</script>
+
+<template>
+  <main v-if="!loading" class="app-shell">
+    <section v-if="!family" class="onboarding"><div class="brand-mark">Aa</div><p class="eyebrow">家庭英语学习</p><h1>英语学习账本</h1><p>把课程余额、上课安排与每一次成长记录放在一起。</p><form @submit.prevent="createFamily"><label>孩子昵称<input v-model.trim="setup.childName" required placeholder="例如：乐乐"/></label><label>你的称呼<input v-model.trim="setup.displayName" placeholder="例如：妈妈"/></label><button class="primary" type="submit">创建家庭</button></form></section>
+    <template v-else>
+      <header><div><p class="eyebrow">{{ family.childName }}的学习空间</p><h1>{{ view === 'home' ? '学习安排' : view === 'calendar' ? '课程日历' : view === 'growth' ? '成长记录' : '家庭管理' }}</h1></div><button v-if="canWrite && view==='home'" class="icon-button" aria-label="添加课程" title="添加课程" @click="showCourse=true">+</button></header>
+      <p v-if="notice" class="notice">{{ notice }}</p><p v-if="error" class="error">{{ error }} <button @click="error=''">关闭</button></p>
+      <section v-if="view==='home'" class="content">
+        <div v-if="!courses.length" class="empty"><h2>先添加第一门课程</h2><p>设置总课时和每周固定上课时间，系统会生成未来课程安排。</p><button class="primary" @click="showCourse=true">添加课程</button></div>
+        <template v-else><article v-for="course in courses" :key="course.id" class="course-row"><i :style="{background:course.color}"/><div><strong>{{ course.name }}</strong><span v-if="course.weekday !== undefined">每周{{week[course.weekday]}} {{ course.timeOfDay }}</span></div><b>{{ course.remainingLessons }}<small> / {{ course.totalLessons }} 课时</small></b></article><h2>即将上课</h2><article v-for="lesson in upcoming" :key="lesson.id" class="lesson-card"><div><p>{{ date(lesson.startsAt) }}</p><h3>{{ lesson.courseName }}</h3><span>剩余 {{ lesson.remainingLessons }} 课时</span></div><button v-if="canWrite" class="primary compact" @click="complete(lesson)">完成课程</button></article><section v-if="records.length" class="recent"><h2>最近学习</h2><p>{{ records[0].courseName }} · {{ records[0].topic }}</p></section></template>
+      </section>
+      <section v-else-if="view==='calendar'" class="content"><p class="section-copy">未来三个月的固定课表与课程状态。</p><article v-for="lesson in lessons" :key="lesson.id" class="calendar-row"><time>{{ date(lesson.startsAt) }}</time><div><strong>{{lesson.courseName}}</strong><span :class="'status '+lesson.status">{{ lesson.status==='pending'?'待上课':lesson.status==='completed'?'已完成':lesson.status }}</span></div><button v-if="canWrite && lesson.status==='completed'" class="text-button" @click="undo(lesson)">撤销</button><button v-else-if="canWrite && lesson.status==='pending'" class="text-button" @click="complete(lesson)">完成</button></article></section>
+      <section v-else-if="view==='growth'" class="content"><button v-if="canWrite" class="primary add-record" @click="showRecord=true">添加学习记录</button><article v-for="record in records" :key="record.id" class="record-card"><p>{{ record.courseName }} · {{ date(record.createdAt) }}</p><h2>{{record.topic}}</h2><p v-if="record.notes">{{record.notes}}</p><div v-if="record.tags" class="tags">{{record.tags}}</div><a v-if="record.link" :href="record.link" target="_blank" rel="noreferrer">打开资料链接</a></article><div v-if="!records.length" class="empty"><h2>还没有学习记录</h2><p>课后记下主题、表现和需要复习的内容。</p></div></section>
+      <section v-else class="content"><article class="family-card"><p>当前角色</p><h2>{{ family.role === 'owner' ? '家庭创建者' : family.role === 'admin' ? '管理员' : '查看成员' }}</h2><p>创建者可导出数据；管理员可维护课程和学习记录。</p><button v-if="family.role==='owner'" class="text-button" @click="exportData">导出家庭数据</button></article><article class="family-card"><p>数据保存</p><h2>本机 SQLite 数据库</h2><p>建议定期下载导出文件，并备份服务器上的 data 目录。</p></article></section>
+      <nav><button :class="{active:view==='home'}" @click="view='home'"><span>⌂</span>首页</button><button :class="{active:view==='calendar'}" @click="view='calendar'"><span>□</span>日历</button><button :class="{active:view==='growth'}" @click="view='growth'"><span>◇</span>成长</button><button :class="{active:view==='family'}" @click="view='family'"><span>○</span>家庭</button></nav>
+      <div v-if="showCourse" class="modal-backdrop" @click.self="showCourse=false"><form class="modal" @submit.prevent="addCourse"><div class="modal-title"><h2>添加课程</h2><button type="button" class="icon-button" @click="showCourse=false">×</button></div><label>课程名称<input v-model.trim="courseForm.name" required placeholder="例如：外教口语"/></label><label>初始总课时<input v-model.number="courseForm.totalLessons" type="number" min="1" required/></label><div class="two"><label>每周<input v-model.number="courseForm.weekday" type="number" min="0" max="6" required/></label><label>上课时间<input v-model="courseForm.timeOfDay" type="time" required/></label></div><button class="primary" type="submit">保存课程</button></form></div>
+      <div v-if="showRecord" class="modal-backdrop" @click.self="showRecord=false"><form class="modal" @submit.prevent="saveRecord"><div class="modal-title"><h2>添加学习记录</h2><button type="button" class="icon-button" @click="showRecord=false">×</button></div><label>所属课程<select v-model="recordForm.courseId" required><option disabled value="">选择课程</option><option v-for="course in courses" :key="course.id" :value="course.id">{{course.name}}</option></select></label><label>本节主题<input v-model.trim="recordForm.topic" required placeholder="例如：动物主题对话"/></label><label>学习笔记<textarea v-model="recordForm.notes" placeholder="老师反馈、孩子表现、需要复习的内容"/></label><label>标签<input v-model="recordForm.tags" placeholder="单词、句型或能力标签"/></label><label>资料链接<input v-model="recordForm.link" type="url" placeholder="网盘或外部资料链接"/></label><button class="primary" type="submit">保存记录</button></form></div>
+    </template>
+  </main>
+  <div v-else class="loading">正在加载家庭数据...</div>
+</template>

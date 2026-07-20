@@ -1,0 +1,7 @@
+.superpowers/
+.worktrees/
+miniapp/node_modules/
+miniapp/dist/
+miniapp/.hbuilderx/
+miniapp/unpackage/
+miniapp/uniCloud-aliyun/cloudfunctions/common/uni-config-center/uni-id/config.json

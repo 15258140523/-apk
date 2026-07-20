@@ -1,0 +1,16 @@
+{
+  "bsonType": "object",
+  "required": ["family_id", "created_at", "updated_at", "record_id", "kind", "cloud_file_id", "bytes", "deleted_at"],
+  "permission": { "read": false, "create": false, "update": false, "delete": false },
+  "properties": {
+    "_id": { "description": "database id" },
+    "family_id": { "bsonType": "string" },
+    "created_at": { "bsonType": "timestamp" },
+    "updated_at": { "bsonType": "timestamp" },
+    "record_id": { "bsonType": "string" },
+    "kind": { "bsonType": "string" },
+    "cloud_file_id": { "bsonType": "string" },
+    "bytes": { "bsonType": "int", "minimum": 0 },
+    "deleted_at": { "bsonType": ["timestamp", "null"] }
+  }
+}
