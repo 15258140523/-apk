@@ -96,7 +96,7 @@ sudo systemctl start family-english
 
 1. 在 GitHub 仓库 **Settings > Secrets and variables > Actions > Variables** 添加 `SERVICE_URL=https://english.example.com/`。
 2. 打 `v1.0.0` 形式的 tag 或手动运行 **Build Android APK** 工作流。
-3. 下载 `family-english-android-apk`。该工作流产出未签名 APK，准备分发前在 CI 中配置 Android keystore 并加入签名步骤。
+3. 下载 `family-english-android-apk`。该工作流产出可安装的 debug APK；准备上架或正式分发前，在 CI 中配置 Android keystore 并改为构建签名 release APK。
 4. 真机安装后确认页面为 HTTPS、首页可读、课程能创建、外部网盘链接会打开系统浏览器。
 
 ## 外网验收清单
