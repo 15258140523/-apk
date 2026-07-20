@@ -10,7 +10,7 @@
 
 ## 2. 部署二进制
 
-在部署主机或同 CPU 架构的 Linux 构建环境中运行 `./scripts/package-release.sh`，然后将 `release/` 下生成的压缩包解压。以下命令假设已进入解压后的目录。
+在任意开发机运行 `GOOS=linux GOARCH=amd64 ./scripts/package-release.sh`，然后将 `release/` 下生成的压缩包解压。以下命令假设已进入解压后的目录。
 
 ```bash
 sudo useradd --system --home /var/lib/family-english --shell /usr/sbin/nologin familyenglish

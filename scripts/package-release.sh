@@ -23,7 +23,7 @@ mkdir -p "$PACKAGE_DIR" "$GO_CACHE_DIR"
 
 FRONTEND_BUILD=(npm run build --prefix "$ROOT_DIR/web")
 
-echo "[1/3] Preparing frontend dependencies"
+echo "[1/4] Preparing frontend dependencies"
 if [[ -x "$ROOT_DIR/web/node_modules/.bin/vite" ]]; then
   echo "Frontend dependencies already installed"
 elif [[ -f "$ROOT_DIR/web/pnpm-lock.yaml" ]]; then
@@ -36,11 +36,14 @@ else
   FRONTEND_BUILD=(npm run build --prefix "$ROOT_DIR/web")
 fi
 
-echo "[2/3] Building Vue frontend"
+echo "[2/4] Building Vue frontend"
 "${FRONTEND_BUILD[@]}"
 
-echo "[3/3] Building ${OS_NAME}/${ARCH_NAME} service binary"
-GOCACHE="$GO_CACHE_DIR" go build -trimpath -ldflags="-s -w" -o "$PACKAGE_DIR/family-english" "$ROOT_DIR/cmd/server"
+echo "[3/4] Resolving Go dependencies"
+GOCACHE="$GO_CACHE_DIR" go mod tidy
+
+echo "[4/4] Building ${OS_NAME}/${ARCH_NAME} service binary"
+CGO_ENABLED=0 GOCACHE="$GO_CACHE_DIR" go build -trimpath -ldflags="-s -w" -o "$PACKAGE_DIR/family-english" "$ROOT_DIR/cmd/server"
 cp "$ROOT_DIR/docs/operations/self-hosted-deployment.md" "$PACKAGE_DIR/DEPLOYMENT.md"
 cp "$ROOT_DIR/README.md" "$PACKAGE_DIR/README.md"
 

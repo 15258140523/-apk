@@ -33,7 +33,11 @@ go run ./cmd/server -addr :8080 -data ./data
 
 脚本会在 `release/` 中生成本机系统架构的服务端压缩包、部署文档和 SHA-256 校验文件。APK 只在 GitHub Actions 的 `Build Android APK` 工作流中构建。
 
-由于 SQLite 驱动使用本机 C 编译器，Linux 部署包应在 Linux 主机或同架构 Linux 构建环境中运行此脚本。
+SQLite 驱动为纯 Go 实现，可直接交叉编译 Linux AMD64 服务端包：
+
+```bash
+GOOS=linux GOARCH=amd64 ./scripts/package-release.sh
+```
 
 Open `http://127.0.0.1:8080`. The first visitor creates the family and first course. For an early self-hosted deployment, identities use the `X-User-ID` request header (default `local-owner`); put the service behind an identity-aware reverse proxy before inviting family members.
 
