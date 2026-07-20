@@ -1,4 +1,4 @@
-name: Build release artifacts
+name: Build Android APK
 
 on:
   push:
@@ -14,26 +14,6 @@ permissions:
   contents: read
 
 jobs:
-  server:
-    name: Server (linux-amd64)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-      - run: npm ci --prefix web
-      - run: npm run build --prefix web
-      - run: GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build -trimpath -ldflags="-s -w" -o dist/family-english-linux-amd64 ./cmd/server
-      - uses: actions/upload-artifact@v4
-        with:
-          name: family-english-linux-amd64
-          path: dist/*
   android:
     name: Android APK
     runs-on: ubuntu-latest

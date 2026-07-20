@@ -10,12 +10,12 @@
 
 ## 2. 部署二进制
 
-在 GitHub Actions 的 **Build release artifacts** 下载 `family-english-linux-amd64`。当前工作流使用稳定的 GitHub x86 Linux Runner；如你的闲置主机是 ARM64，请在该主机本地执行 README 中的 `go build` 命令。
+在部署主机或同 CPU 架构的 Linux 构建环境中运行 `./scripts/package-release.sh`，然后将 `release/` 下生成的压缩包解压。以下命令假设已进入解压后的目录。
 
 ```bash
 sudo useradd --system --home /var/lib/family-english --shell /usr/sbin/nologin familyenglish
 sudo install -d -o familyenglish -g familyenglish /opt/family-english /var/lib/family-english
-sudo install -o root -g root -m 0755 family-english-linux-amd64 /opt/family-english/family-english
+sudo install -o root -g root -m 0755 family-english /opt/family-english/family-english
 ```
 
 创建 `/etc/systemd/system/family-english.service`：
@@ -95,7 +95,7 @@ sudo systemctl start family-english
 ## 6. 构建 APK
 
 1. 在 GitHub 仓库 **Settings > Secrets and variables > Actions > Variables** 添加 `SERVICE_URL=https://english.example.com/`。
-2. 打 `v1.0.0` 形式的 tag 或手动运行 **Build release artifacts** 工作流。
+2. 打 `v1.0.0` 形式的 tag 或手动运行 **Build Android APK** 工作流。
 3. 下载 `family-english-android-apk`。该工作流产出未签名 APK，准备分发前在 CI 中配置 Android keystore 并加入签名步骤。
 4. 真机安装后确认页面为 HTTPS、首页可读、课程能创建、外部网盘链接会打开系统浏览器。
 
