@@ -15,17 +15,8 @@ permissions:
 
 jobs:
   server:
-    name: "Server (${{ matrix.goos }}-${{ matrix.goarch }})"
-    runs-on: "${{ matrix.runner }}"
-    strategy:
-      matrix:
-        include:
-          - goos: linux
-            goarch: amd64
-            runner: ubuntu-latest
-          - goos: linux
-            goarch: arm64
-            runner: ubuntu-24.04-arm
+    name: Server (linux-amd64)
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,10 +29,10 @@ jobs:
           go-version: stable
       - run: npm ci --prefix web
       - run: npm run build --prefix web
-      - run: GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} CGO_ENABLED=1 go build -trimpath -ldflags="-s -w" -o dist/family-english-${{ matrix.goos }}-${{ matrix.goarch }} ./cmd/server
+      - run: GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build -trimpath -ldflags="-s -w" -o dist/family-english-linux-amd64 ./cmd/server
       - uses: actions/upload-artifact@v4
         with:
-          name: "family-english-${{ matrix.goos }}-${{ matrix.goarch }}"
+          name: family-english-linux-amd64
           path: dist/*
   android:
     name: Android APK

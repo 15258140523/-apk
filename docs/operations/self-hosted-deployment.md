@@ -10,7 +10,7 @@
 
 ## 2. 部署二进制
 
-在 GitHub Actions 的 **Build release artifacts** 下载与主机架构一致的 `family-english-linux-amd64` 或 `family-english-linux-arm64`。
+在 GitHub Actions 的 **Build release artifacts** 下载 `family-english-linux-amd64`。当前工作流使用稳定的 GitHub x86 Linux Runner；如你的闲置主机是 ARM64，请在该主机本地执行 README 中的 `go build` 命令。
 
 ```bash
 sudo useradd --system --home /var/lib/family-english --shell /usr/sbin/nologin familyenglish
