@@ -5,7 +5,7 @@ on:
     inputs:
       service_url:
         description: "HTTPS service URL for the Android shell"
-        required: false
+        required: true
         type: string
   push:
     branches:
